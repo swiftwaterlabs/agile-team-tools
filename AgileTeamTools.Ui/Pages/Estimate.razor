@@ -1,0 +1,13 @@
+﻿@page "/{TeamId}/estimate"
+
+<input @bind-value="UserName" placeholder="User Name"/>
+<button @onclick="Start">Start</button>
+
+<input @bind-value="EstimatedValue" placeholder="Estimate"/>
+<button @onclick="Send">Send</button>
+
+@foreach(var message in Messages)
+{
+    <div>@message.Username</div>
+    <div>@message.Body</div>
+}
