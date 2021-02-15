@@ -3,10 +3,10 @@
 <MatHeadline2>Lean Coffee</MatHeadline2>
 <MatSubtitle1>A way for teams to share a timer in a virtual environment</MatSubtitle1>
 
-<MatTextField @bind-Value="Minutes" Label="Minutes" />
+<MatTextField @bind-Value="Minutes" Label="Minutes" Disabled="@(IsTimerRunning || !CanManageTimer)"/>
 <MatButton Outlined="true" OnClick="StartTimer" Icon="@MatIconNames.Play_circle_filled" Disabled="@(IsTimerRunning || !CanManageTimer)">Start</MatButton>&nbsp;
 <MatButton Outlined="true" OnClick="StopTimer" Icon="@MatIconNames.Stop" Disabled="@(!IsTimerRunning || !CanManageTimer)">Stop</MatButton>&nbsp;
-<MatButton Dense="true" OnClick="ResetTimer" Icon="@MatIconNames.Refresh" Disabled="@(IsTimerRunning || !CanManageTimer)">Reset</MatButton>
+<MatButton Dense="true" OnClick="ResetTimer" Icon="@MatIconNames.Refresh">Reset</MatButton>
 
 <br />
 <MatDivider />
