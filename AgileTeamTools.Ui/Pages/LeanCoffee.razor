@@ -1,7 +1,7 @@
 ﻿@page "/{TeamId}/leancoffee"
 
 <MatHeadline2>Lean Coffee</MatHeadline2>
-<MatSubtitle1>A way for teams to share a timer in a virtual environment</MatSubtitle1>
+<MatSubtitle1>A way for teams to share a timer and their responses in a virtual environment</MatSubtitle1>
 
 <MatTextField @bind-Value="Minutes" Label="Minutes" Disabled="@(IsTimerRunning || !CanManageTimer)"/>
 <MatButton Outlined="true" OnClick="StartTimer" Icon="@MatIconNames.Play_circle_filled" Disabled="@(IsTimerRunning || !CanManageTimer)">Start</MatButton>&nbsp;
