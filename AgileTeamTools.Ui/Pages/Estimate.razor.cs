@@ -1,4 +1,5 @@
-﻿using AgileTeamTools.Ui.Models;
+﻿using AgileTeamTools.Ui.Hubs;
+using AgileTeamTools.Ui.Models;
 using AgileTeamTools.Ui.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -16,6 +17,9 @@ namespace AgileTeamTools.Ui.Pages
         [Inject]
         NavigationManager NavigationManager { get; set; }
 
+        [Inject]
+        NameGeneratorService NameService { get; set; }
+
         [Parameter]
         public string TeamId { get; set; }
         private string ChannelName = "Estimate";
@@ -25,6 +29,11 @@ namespace AgileTeamTools.Ui.Pages
 
         public bool AreMessagesVisible = false;
         public List<Message> Estimates = new List<Message>();
+
+        protected override async Task OnInitializedAsync()
+        {
+            UserName = await NameService.GetRandomName();
+        }
 
         protected override Task OnParametersSetAsync()
         {

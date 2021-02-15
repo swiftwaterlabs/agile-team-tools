@@ -3,16 +3,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR;
 
-namespace AgileTeamTools.Ui.Services
+namespace AgileTeamTools.Ui.Hubs
 {
-    public class AgileTeamToolsHub:Hub
+    public class AgileTeamToolsHub : Hub
     {
         public const string HubUrl = "/default";
 
         public Task JoinGroup(string teamId, string channel)
         {
             var groupName = GetGroupName(teamId, channel);
-            return this.Groups.AddToGroupAsync(this.Context.ConnectionId, groupName);
+            return Groups.AddToGroupAsync(Context.ConnectionId, groupName);
         }
 
         public async Task Broadcast(string teamId, string channel, string username, string message)

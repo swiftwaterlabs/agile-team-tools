@@ -1,3 +1,4 @@
+using AgileTeamTools.Ui.Hubs;
 using AgileTeamTools.Ui.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,6 +21,9 @@ namespace AgileTeamTools.Ui
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddHttpClient();
+
+            services.AddTransient<NameGeneratorService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
