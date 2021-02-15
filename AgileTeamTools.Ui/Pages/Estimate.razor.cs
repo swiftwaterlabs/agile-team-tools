@@ -11,7 +11,6 @@ namespace AgileTeamTools.Ui.Pages
 {
     public partial class Estimate
     {
-        private string _hubUrl;
         private HubConnection _hubConnection;
 
         [Inject]
@@ -55,10 +54,10 @@ namespace AgileTeamTools.Ui.Pages
         public async Task Start()
         {
             var baseUrl = NavigationManager.BaseUri;
-            _hubUrl = baseUrl.TrimEnd('/') + AgileTeamToolsHub.HubUrl;
+            var hubUrl = baseUrl.TrimEnd('/') + AgileTeamToolsHub.HubUrl;
 
             _hubConnection = new HubConnectionBuilder()
-                .WithUrl(_hubUrl)
+                .WithUrl(hubUrl)
                 .Build();
 
             _hubConnection.On<string, string>("Broadcast", HandleMessageReceived);
