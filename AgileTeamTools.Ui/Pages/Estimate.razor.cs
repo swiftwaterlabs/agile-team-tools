@@ -24,7 +24,7 @@ namespace AgileTeamTools.Ui.Pages
         public string EstimatedValue { get; set; }
 
         public bool AreMessagesVisible = false;
-        public List<Message> Messages = new List<Message>();
+        public List<Message> Estimates = new List<Message>();
 
         protected override Task OnParametersSetAsync()
         {
@@ -40,20 +40,35 @@ namespace AgileTeamTools.Ui.Pages
                 .WithUrl(_hubUrl)
                 .Build();
 
-            _hubConnection.On<string, string>("Broadcast", ReceiveMessage);
-            
+            _hubConnection.On<string, string>("Broadcast", HandleMessageReceived);
+            _hubConnection.On("Reset", HandleReset);
+            _hubConnection.On("Show", HandleShow);
+
             await _hubConnection.StartAsync();
 
             await _hubConnection.SendAsync("JoinGroup", TeamId, ChannelName);
             
         }
 
-        private void ReceiveMessage(string name, string message)
+        private void HandleMessageReceived(string name, string message)
         {
             bool isMine = name.Equals(UserName, StringComparison.OrdinalIgnoreCase);
 
-            Messages.Add(new Message(name, message, isMine));
+            Estimates.Add(new Message(name, message, isMine));
 
+            StateHasChanged();
+        }
+
+        private void HandleReset()
+        {
+            Estimates.Clear();
+            AreMessagesVisible = false;
+            StateHasChanged();
+        }
+
+        private void HandleShow()
+        {
+            AreMessagesVisible = true;
             StateHasChanged();
         }
 
@@ -62,15 +77,14 @@ namespace AgileTeamTools.Ui.Pages
             await _hubConnection.SendAsync("Broadcast",TeamId, ChannelName, UserName, EstimatedValue);
         }
 
-        private void Reset()
+        private async Task Reset()
         {
-            Messages.Clear();
-            AreMessagesVisible = false;
+            await _hubConnection.SendAsync("Reset", TeamId, ChannelName);
         }
 
-        private void Show()
+        private async Task Show()
         {
-            AreMessagesVisible = true;
+            await _hubConnection.SendAsync("Show", TeamId, ChannelName);
         }
     }
 }

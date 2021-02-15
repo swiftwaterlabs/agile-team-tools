@@ -21,6 +21,18 @@ namespace AgileTeamTools.Ui.Services
             await Clients.Group(groupName).SendAsync("Broadcast", username, message);
         }
 
+        public async Task Reset(string teamId, string channel)
+        {
+            var groupName = GetGroupName(teamId, channel);
+            await Clients.Group(groupName).SendAsync("Reset");
+        }
+
+        public async Task Show(string teamId, string channel)
+        {
+            var groupName = GetGroupName(teamId, channel);
+            await Clients.Group(groupName).SendAsync("Show");
+        }
+
         private static string GetGroupName(string teamId, string channel)
         {
             return $"{teamId}|{channel}";

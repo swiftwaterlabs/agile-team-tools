@@ -7,8 +7,10 @@
 <button @onclick="Reset">Reset</button>
 <button @onclick="Show">Show</button>
 
-@foreach(var message in Messages)
+
+@foreach(var message in Estimates)
 {
     <div>@message.Username</div>
     <div>@message.Body</div>
+    <div>@AreMessagesVisible</div>
 }
