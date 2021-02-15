@@ -1,21 +1,26 @@
 ﻿using AgileTeamTools.Ui.Hubs;
+using AgileTeamTools.Ui.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AgileTeamTools.Ui.Pages
 {
     public partial class LeanCoffee
     {
-        private HubConnection _hubConnection;
+        private HubConnection _timerHubConnection;
+        private HubConnection _actionHubConnection;
 
         [Inject]
         NavigationManager NavigationManager { get; set; }
 
         [Parameter]
         public string TeamId { get; set; }
-        private string ChannelName = "Timer";
+        private string TimerChannelName = "LeanCoffee/Timer";
+        private string ActionChannelName = "LeanCoffee/Action";
 
         public int Minutes { get; set; } = 5;
         public string Elapsed { get; set; }
@@ -24,6 +29,10 @@ namespace AgileTeamTools.Ui.Pages
         private DateTime ElapsedAt { get; set; }
         private bool IsTimerRunning { get; set; } = false;
         private bool CanManageTimer { get; set; } = true;
+
+        private string SelectedAction { get; set; }
+        private bool AreActionsVisible { get; set; } = false;
+        public Dictionary<string, Message> Actions = new Dictionary<string, Message>();
 
         protected override void OnInitialized()
         {
@@ -41,29 +50,64 @@ namespace AgileTeamTools.Ui.Pages
             var baseUrl = NavigationManager.BaseUri;
             var hubUrl = baseUrl.TrimEnd('/') + AgileTeamToolsHub.HubUrl;
 
-            _hubConnection = new HubConnectionBuilder()
+            await ConfigureTimerHub(hubUrl);
+            await ConfigureActionHub(hubUrl);
+        }
+
+        private async Task ConfigureTimerHub(string hubUrl)
+        {
+            _timerHubConnection = new HubConnectionBuilder()
                 .WithUrl(hubUrl)
                 .Build();
 
-            _hubConnection.On<string, string>("Broadcast", HandleMessageReceived);
-            _hubConnection.On("Reset", HandleReset);
+            _timerHubConnection.On<string, string>("Broadcast", HandleMessageReceived);
+            _timerHubConnection.On("Reset", HandleReset);
 
-            await _hubConnection.StartAsync();
-            await _hubConnection.SendAsync("JoinGroup", TeamId, ChannelName);
+            await _timerHubConnection.StartAsync();
+            await _timerHubConnection.SendAsync("JoinGroup", TeamId, TimerChannelName);
+        }
 
+        private async Task ConfigureActionHub(string hubUrl)
+        {
+            _actionHubConnection = new HubConnectionBuilder()
+                .WithUrl(hubUrl)
+                .Build();
+
+            _actionHubConnection.On<string, string>("Broadcast", HandleActionMessageReceived);
+            _actionHubConnection.On("Show", HandleShow);
+            _actionHubConnection.On("Hide", HandleHide);
+
+            await _actionHubConnection.StartAsync();
+            await _actionHubConnection.SendAsync("JoinGroup", TeamId, ActionChannelName);
         }
 
         private void HandleMessageReceived(string name, string message)
         {
-            CanManageTimer = name == _hubConnection.ConnectionId;
+            CanManageTimer = name == _timerHubConnection.ConnectionId;
 
             Elapsed = message;
+            StateHasChanged();
+        }
+
+        private void HandleActionMessageReceived(string name, string message)
+        {
+            bool isMine = name.Equals(_actionHubConnection.ConnectionId, StringComparison.OrdinalIgnoreCase);
+
+            if (!Actions.ContainsKey(name))
+            {
+                Actions.Add(name, new Message(name, message, isMine));
+            }
+            Actions[name].Body = message;
             StateHasChanged();
         }
 
         private void HandleReset()
         {
             Elapsed = null;
+            SelectedAction = null;
+            Actions.Clear();
+            AreActionsVisible = false;
+
             StateHasChanged();
         }
 
@@ -85,7 +129,7 @@ namespace AgileTeamTools.Ui.Pages
         {
             StopTimer();
             ElapsedAt = DateTime.Now.AddMinutes(Minutes);
-            return _hubConnection.SendAsync("Reset", TeamId, ChannelName);
+            return _timerHubConnection.SendAsync("Reset", TeamId, TimerChannelName);
         }
 
         private void TimerObject_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -93,8 +137,46 @@ namespace AgileTeamTools.Ui.Pages
             var elapsed = ElapsedAt.Subtract(e.SignalTime);
             var elapsedFormatted = $"{elapsed.Minutes}:{elapsed.Seconds.ToString("00")}";
             
-            _hubConnection.SendAsync("Broadcast", TeamId, ChannelName, _hubConnection.ConnectionId, elapsedFormatted);
+            _timerHubConnection.SendAsync("Broadcast", TeamId, TimerChannelName, _timerHubConnection.ConnectionId, elapsedFormatted);
             
+        }
+
+        private async Task SetAction(string value)
+        {
+            SelectedAction = value;
+            await _actionHubConnection.SendAsync("Broadcast", TeamId, ActionChannelName, _actionHubConnection.ConnectionId, value);
+        }
+
+        public async Task ShowResponses()
+        {
+            await _actionHubConnection.SendAsync("Show", TeamId, ActionChannelName);
+        }
+
+        public async Task HideResponses()
+        {
+            await _actionHubConnection.SendAsync("Hide", TeamId, ActionChannelName);
+        }
+
+        private void HandleShow()
+        {
+            AreActionsVisible = true;
+            StateHasChanged();
+        }
+
+        private void HandleHide()
+        {
+            AreActionsVisible = false;
+            StateHasChanged();
+        }
+
+        private IDictionary<string,int> GetActionSummary()
+        {
+            var summary = Actions
+                .Values
+                .GroupBy(a => a.Body)
+                .ToDictionary(g => g.Key, a => a.Count());
+
+            return summary;
         }
     }
 }
