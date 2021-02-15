@@ -31,12 +31,13 @@
 @if (AreMessagesVisible)
 {
     <MatHeadline4>Team Results</MatHeadline4>
+    <br/>
     <div class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
             @foreach (var message in Estimates)
             {
-                <div class="mat-layout-grid-cell">
-                    <MatPaper Elevation="10" Rounded="true" Outlined="true">
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                    <MatPaper Elevation="10" Rounded="true" Outlined="true" Style="text-align: center">
                         <MatHeadline3>@message.Body</MatHeadline3>
                         <MatSubtitle1>@message.Username</MatSubtitle1>
                     </MatPaper>

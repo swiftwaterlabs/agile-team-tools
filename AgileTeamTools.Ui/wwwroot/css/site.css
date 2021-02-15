@@ -48,3 +48,9 @@ a, .btn-link {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+.body-wrapper {
+    max-width: 1280px;
+    padding: 24px;
+    margin: 0 auto;
+}
