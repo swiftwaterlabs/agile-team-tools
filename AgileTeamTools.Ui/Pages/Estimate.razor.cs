@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AgileTeamTools.Ui.Pages
@@ -19,11 +18,18 @@ namespace AgileTeamTools.Ui.Pages
 
         [Parameter]
         public string TeamId { get; set; }
+        private string ChannelName = "Estimate";
 
         public string UserName { get; set; }
         public string EstimatedValue { get; set; }
 
+        public bool AreMessagesVisible = false;
         public List<Message> Messages = new List<Message>();
+
+        protected override Task OnParametersSetAsync()
+        {
+            return Start();
+        }
 
         public async Task Start()
         {
@@ -38,7 +44,7 @@ namespace AgileTeamTools.Ui.Pages
             
             await _hubConnection.StartAsync();
 
-            await _hubConnection.SendAsync("JoinGroup", TeamId);
+            await _hubConnection.SendAsync("JoinGroup", TeamId, ChannelName);
             
         }
 
@@ -53,7 +59,18 @@ namespace AgileTeamTools.Ui.Pages
 
         private async Task Send()
         {
-            await _hubConnection.SendAsync("Broadcast",TeamId, UserName, EstimatedValue);
+            await _hubConnection.SendAsync("Broadcast",TeamId, ChannelName, UserName, EstimatedValue);
+        }
+
+        private void Reset()
+        {
+            Messages.Clear();
+            AreMessagesVisible = false;
+        }
+
+        private void Show()
+        {
+            AreMessagesVisible = true;
         }
     }
 }
