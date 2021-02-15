@@ -40,7 +40,7 @@ namespace AgileTeamTools.Ui.Pages
         };
 
         public bool AreMessagesVisible = false;
-        public List<Message> Estimates = new List<Message>();
+        public Dictionary<string,Message> Estimates = new Dictionary<string, Message>();
 
         protected override async Task OnInitializedAsync()
         {
@@ -76,7 +76,11 @@ namespace AgileTeamTools.Ui.Pages
         {
             bool isMine = name.Equals(UserName, StringComparison.OrdinalIgnoreCase);
 
-            Estimates.Add(new Message(name, message, isMine));
+            if(!Estimates.ContainsKey(name))
+            {
+                Estimates.Add(name, new Message(name, message, isMine));
+            }
+            Estimates[name].Body = message;
 
             StateHasChanged();
         }
