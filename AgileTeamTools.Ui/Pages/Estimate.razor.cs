@@ -37,6 +37,8 @@ namespace AgileTeamTools.Ui.Pages
             _hubConnection.On<string, string>("Broadcast", ReceiveMessage);
             
             await _hubConnection.StartAsync();
+
+            await _hubConnection.SendAsync("JoinGroup", TeamId);
             
         }
 
@@ -51,7 +53,7 @@ namespace AgileTeamTools.Ui.Pages
 
         private async Task Send()
         {
-            await _hubConnection.SendAsync("Broadcast",UserName, EstimatedValue);
+            await _hubConnection.SendAsync("Broadcast",TeamId, UserName, EstimatedValue);
         }
     }
 }
