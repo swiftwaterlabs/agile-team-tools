@@ -1,16 +1,42 @@
 ﻿@page "/{TeamId}/estimate"
+<MatHeadline2>Estimate</MatHeadline2>
 
-<input @bind-value="UserName" placeholder="User Name"/>
+<MatTextField @bind-Value="UserName" Label="User Name" FullWidth="true" />
+<br />
+<MatRadioGroup @bind-Value="@EstimatedValue" TValue="string" Items="EstimateOptions">
+    <ItemTemplate>
+        <MatHeadline4>
+            <MatRadioButton Value="@context">
+                @context
+            </MatRadioButton>
+        </MatHeadline4>
+    </ItemTemplate>
+</MatRadioGroup>
 
-<input @bind-value="EstimatedValue" placeholder="Estimate"/>
-<button @onclick="Send">Send</button>
-<button @onclick="Reset">Reset</button>
-<button @onclick="Show">Show</button>
+<br />
+<MatButton Raised="true" OnClick="Submit" Icon="@(IsSubmitted ? "check_circle": "save_alt")">Submit</MatButton>&nbsp;
 
+<br />
 
-@foreach(var message in Estimates)
+<MatDivider />
+<br />
+<MatButton Outlined="true" OnClick="Show" Icon="account_circle">Show</MatButton>&nbsp;
+<MatButton Dense="true" OnClick="Reset" Icon="highlight_off">Reset</MatButton>
+
+@if (AreMessagesVisible)
 {
-    <div>@message.Username</div>
-    <div>@message.Body</div>
-    <div>@AreMessagesVisible</div>
+    <MatHeadline3>Estimates</MatHeadline3>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            @foreach (var message in Estimates)
+            {
+                <div class="mat-layout-grid-cell">
+                    <MatPaper Elevation="10" Rounded="true" Outlined="true">
+                        <MatHeadline3>@message.Body</MatHeadline3>
+                        <MatSubtitle1>@message.Username</MatSubtitle1>
+                    </MatPaper>
+                </div>
+            }
+        </div>
+    </div>
 }
