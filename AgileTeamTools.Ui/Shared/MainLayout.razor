@@ -1,5 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
+<MatAnchorUtils></MatAnchorUtils>
+
 <MatAppBarContainer>
     <MatAppBar Fixed="true">
         <MatAppBarRow>
@@ -14,6 +16,10 @@
     </MatAppBar>
 
     <MatAppBarContent>
-        @Body
+        <div class="body-wrapper">
+            @Body
+        </div>
     </MatAppBarContent>
 </MatAppBarContainer>
+
+<MatPortalHost></MatPortalHost>

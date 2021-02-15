@@ -19,12 +19,20 @@ namespace AgileTeamTools.Ui.Services
 
         public async Task<string> GetRandomName()
         {
-            var url = "https://namey.muffinlabs.com/name.json?frequency=rare&with_surname=true";
-            var client = _httpClientFactory.CreateClient();
+            try
+            {
+                var url = "https://namey.muffinlabs.com/name.json?frequency=rare&with_surname=true";
+                var client = _httpClientFactory.CreateClient();
 
-            var response = await client.GetFromJsonAsync<string[]>(url);
+                var response = await client.GetFromJsonAsync<string[]>(url);
 
-            return response.FirstOrDefault();
+                return response.FirstOrDefault();
+            }
+            catch
+            {
+                return Guid.NewGuid().ToString();
+            }
+            
         }
 
     }

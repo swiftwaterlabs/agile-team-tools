@@ -1,5 +1,6 @@
 using AgileTeamTools.Ui.Hubs;
 using AgileTeamTools.Ui.Services;
+using MatBlazor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,7 @@ namespace AgileTeamTools.Ui
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddHttpClient();
+            services.AddMatBlazor();
 
             services.AddTransient<NameGeneratorService>();
         }

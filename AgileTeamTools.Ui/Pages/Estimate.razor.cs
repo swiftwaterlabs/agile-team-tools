@@ -29,7 +29,6 @@ namespace AgileTeamTools.Ui.Pages
         public bool IsSubmitted { get; set; } = false;
         public List<string> EstimateOptions = new List<string>
         {
-            "",
             "1",
             "2",
             "3",
@@ -65,6 +64,7 @@ namespace AgileTeamTools.Ui.Pages
             _hubConnection.On<string, string>("Broadcast", HandleMessageReceived);
             _hubConnection.On("Reset", HandleReset);
             _hubConnection.On("Show", HandleShow);
+            _hubConnection.On("Hide", HandleHide);
 
             await _hubConnection.StartAsync();
 
@@ -95,6 +95,12 @@ namespace AgileTeamTools.Ui.Pages
             StateHasChanged();
         }
 
+        private void HandleHide()
+        {
+            AreMessagesVisible = false;
+            StateHasChanged();
+        }
+
         private async Task Submit()
         {
             await _hubConnection.SendAsync("Broadcast",TeamId, ChannelName, UserName, EstimatedValue);
@@ -110,6 +116,16 @@ namespace AgileTeamTools.Ui.Pages
         private async Task Show()
         {
             await _hubConnection.SendAsync("Show", TeamId, ChannelName);
+        }
+
+        private async Task Hide()
+        {
+            await _hubConnection.SendAsync("Hide", TeamId, ChannelName);
+        }
+
+        private void SetEstimate(string value)
+        {
+            EstimatedValue = value;
         }
     }
 }

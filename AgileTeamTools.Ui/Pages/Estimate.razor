@@ -1,31 +1,36 @@
 ﻿@page "/{TeamId}/estimate"
-<MatHeadline2>Estimate</MatHeadline2>
+<MatHeadline2>Team Estimator</MatHeadline2>
+<MatSubtitle1>A way for teams to estimate work in a virtual environment</MatSubtitle1>
 
 <MatTextField @bind-Value="UserName" Label="User Name" FullWidth="true" />
 <br />
-<MatRadioGroup @bind-Value="@EstimatedValue" TValue="string" Items="EstimateOptions">
-    <ItemTemplate>
-        <MatHeadline4>
-            <MatRadioButton Value="@context">
-                @context
-            </MatRadioButton>
-        </MatHeadline4>
-    </ItemTemplate>
-</MatRadioGroup>
+<MatSubtitle1>Choose Your Estimate</MatSubtitle1>
+
+@foreach (var item in EstimateOptions)
+{
+    <MatButton Value="@item" 
+               Label="@item" 
+               OnClick="@(args=>SetEstimate(item))" 
+               Icon="@(EstimatedValue == item ? MatIconNames.Check:"")"
+               Outlined="@(EstimatedValue == item)"
+               />
+}
+
+&nbsp;
+&nbsp;
+<MatButton Raised="true" OnClick="Submit" Icon="@(IsSubmitted ? MatIconNames.Check_circle: MatIconNames.Save_alt)">Submit</MatButton>&nbsp;
 
 <br />
-<MatButton Raised="true" OnClick="Submit" Icon="@(IsSubmitted ? "check_circle": "save_alt")">Submit</MatButton>&nbsp;
-
 <br />
-
 <MatDivider />
 <br />
-<MatButton Outlined="true" OnClick="Show" Icon="account_circle">Show</MatButton>&nbsp;
-<MatButton Dense="true" OnClick="Reset" Icon="highlight_off">Reset</MatButton>
+<MatButton Outlined="true" OnClick="Show" Icon="@MatIconNames.Account_circle">Show</MatButton>&nbsp;
+<MatButton Outlined="true" OnClick="Hide" Icon="@MatIconNames.Highlight_off">Hide</MatButton>&nbsp;
+<MatButton Dense="true" OnClick="Reset" Icon="@MatIconNames.Refresh">Reset</MatButton>
 
 @if (AreMessagesVisible)
 {
-    <MatHeadline3>Estimates</MatHeadline3>
+    <MatHeadline4>Team Results</MatHeadline4>
     <div class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
             @foreach (var message in Estimates)

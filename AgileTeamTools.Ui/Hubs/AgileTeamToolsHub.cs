@@ -33,6 +33,12 @@ namespace AgileTeamTools.Ui.Hubs
             await Clients.Group(groupName).SendAsync("Show");
         }
 
+        public async Task Hide(string teamId, string channel)
+        {
+            var groupName = GetGroupName(teamId, channel);
+            await Clients.Group(groupName).SendAsync("Hide");
+        }
+
         private static string GetGroupName(string teamId, string channel)
         {
             return $"{teamId}|{channel}";
