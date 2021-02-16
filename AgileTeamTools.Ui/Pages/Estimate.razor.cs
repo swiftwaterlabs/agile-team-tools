@@ -73,11 +73,9 @@ namespace AgileTeamTools.Ui.Pages
 
         private void HandleMessageReceived(string name, string message)
         {
-            bool isMine = name.Equals(UserName, StringComparison.OrdinalIgnoreCase);
-
             if(!Estimates.ContainsKey(name))
             {
-                Estimates.Add(name, new Message(name, message, isMine));
+                Estimates.Add(name, new Message(name, message));
             }
             Estimates[name].Body = message;
 

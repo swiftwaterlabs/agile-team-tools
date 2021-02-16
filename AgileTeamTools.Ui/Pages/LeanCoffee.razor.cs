@@ -91,11 +91,9 @@ namespace AgileTeamTools.Ui.Pages
 
         private void HandleActionMessageReceived(string name, string message)
         {
-            bool isMine = name.Equals(_actionHubConnection.ConnectionId, StringComparison.OrdinalIgnoreCase);
-
             if (!Actions.ContainsKey(name))
             {
-                Actions.Add(name, new Message(name, message, isMine));
+                Actions.Add(name, new Message(name, message));
             }
             Actions[name].Body = message;
             StateHasChanged();
