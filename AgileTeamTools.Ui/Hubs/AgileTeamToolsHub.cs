@@ -9,6 +9,15 @@ namespace AgileTeamTools.Ui.Hubs
     {
         public const string HubUrl = "/default";
 
+        public static class MethodNames
+        {
+            public const string Broadcast = nameof(AgileTeamToolsHub.Broadcast);
+            public const string Reset = nameof(AgileTeamToolsHub.Reset);
+            public const string Show = nameof(AgileTeamToolsHub.Show);
+            public const string Hide = nameof(AgileTeamToolsHub.Hide);
+            public const string JoinGroup = nameof(AgileTeamToolsHub.JoinGroup);
+        }
+
         public Task JoinGroup(string teamId, string channel)
         {
             var groupName = GetGroupName(teamId, channel);

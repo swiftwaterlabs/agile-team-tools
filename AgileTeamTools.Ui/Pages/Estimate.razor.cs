@@ -3,7 +3,6 @@ using AgileTeamTools.Ui.Models;
 using AgileTeamTools.Ui.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -60,14 +59,14 @@ namespace AgileTeamTools.Ui.Pages
                 .WithUrl(hubUrl)
                 .Build();
 
-            _hubConnection.On<string, string>("Broadcast", HandleMessageReceived);
-            _hubConnection.On("Reset", HandleReset);
-            _hubConnection.On("Show", HandleShow);
-            _hubConnection.On("Hide", HandleHide);
+            _hubConnection.On<string, string>(AgileTeamToolsHub.MethodNames.Broadcast, HandleMessageReceived);
+            _hubConnection.On(AgileTeamToolsHub.MethodNames.Reset, HandleReset);
+            _hubConnection.On(AgileTeamToolsHub.MethodNames.Show, HandleShow);
+            _hubConnection.On(AgileTeamToolsHub.MethodNames.Hide, HandleHide);
 
             await _hubConnection.StartAsync();
 
-            await _hubConnection.SendAsync("JoinGroup", TeamId, ChannelName);
+            await _hubConnection.SendAsync(AgileTeamToolsHub.MethodNames.JoinGroup, TeamId, ChannelName);
             
         }
 
@@ -104,24 +103,24 @@ namespace AgileTeamTools.Ui.Pages
 
         private async Task Submit()
         {
-            await _hubConnection.SendAsync("Broadcast",TeamId, ChannelName, UserName, EstimatedValue);
+            await _hubConnection.SendAsync(AgileTeamToolsHub.MethodNames.Broadcast, TeamId, ChannelName, UserName, EstimatedValue);
             IsSubmitted = true;
         }
 
         private async Task Reset()
         {
-            await _hubConnection.SendAsync("Reset", TeamId, ChannelName);
+            await _hubConnection.SendAsync(AgileTeamToolsHub.MethodNames.Reset, TeamId, ChannelName);
             IsSubmitted = false;
         }
 
         private async Task Show()
         {
-            await _hubConnection.SendAsync("Show", TeamId, ChannelName);
+            await _hubConnection.SendAsync(AgileTeamToolsHub.MethodNames.Show, TeamId, ChannelName);
         }
 
         private async Task Hide()
         {
-            await _hubConnection.SendAsync("Hide", TeamId, ChannelName);
+            await _hubConnection.SendAsync(AgileTeamToolsHub.MethodNames.Hide, TeamId, ChannelName);
         }
 
         private void SetEstimate(string value)

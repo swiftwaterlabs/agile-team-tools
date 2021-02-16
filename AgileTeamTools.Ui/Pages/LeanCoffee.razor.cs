@@ -60,11 +60,11 @@ namespace AgileTeamTools.Ui.Pages
                 .WithUrl(hubUrl)
                 .Build();
 
-            _timerHubConnection.On<string, string>("Broadcast", HandleMessageReceived);
-            _timerHubConnection.On("Reset", HandleReset);
+            _timerHubConnection.On<string, string>(AgileTeamToolsHub.MethodNames.Broadcast, HandleMessageReceived);
+            _timerHubConnection.On(AgileTeamToolsHub.MethodNames.Reset, HandleReset);
 
             await _timerHubConnection.StartAsync();
-            await _timerHubConnection.SendAsync("JoinGroup", TeamId, TimerChannelName);
+            await _timerHubConnection.SendAsync(AgileTeamToolsHub.MethodNames.JoinGroup, TeamId, TimerChannelName);
         }
 
         private async Task ConfigureActionHub(string hubUrl)
@@ -73,9 +73,9 @@ namespace AgileTeamTools.Ui.Pages
                 .WithUrl(hubUrl)
                 .Build();
 
-            _actionHubConnection.On<string, string>("Broadcast", HandleActionMessageReceived);
-            _actionHubConnection.On("Show", HandleShow);
-            _actionHubConnection.On("Hide", HandleHide);
+            _actionHubConnection.On<string, string>(AgileTeamToolsHub.MethodNames.Broadcast, HandleActionMessageReceived);
+            _actionHubConnection.On(AgileTeamToolsHub.MethodNames.Show, HandleShow);
+            _actionHubConnection.On(AgileTeamToolsHub.MethodNames.Hide, HandleHide);
 
             await _actionHubConnection.StartAsync();
             await _actionHubConnection.SendAsync("JoinGroup", TeamId, ActionChannelName);
@@ -127,7 +127,7 @@ namespace AgileTeamTools.Ui.Pages
         {
             StopTimer();
             ElapsedAt = DateTime.Now.AddMinutes(Minutes);
-            return _timerHubConnection.SendAsync("Reset", TeamId, TimerChannelName);
+            return _timerHubConnection.SendAsync(AgileTeamToolsHub.MethodNames.Reset, TeamId, TimerChannelName);
         }
 
         private void TimerObject_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -135,24 +135,24 @@ namespace AgileTeamTools.Ui.Pages
             var elapsed = ElapsedAt.Subtract(e.SignalTime);
             var elapsedFormatted = $"{elapsed.Minutes}:{elapsed.Seconds.ToString("00")}";
             
-            _timerHubConnection.SendAsync("Broadcast", TeamId, TimerChannelName, _timerHubConnection.ConnectionId, elapsedFormatted);
+            _timerHubConnection.SendAsync(AgileTeamToolsHub.MethodNames.Broadcast, TeamId, TimerChannelName, _timerHubConnection.ConnectionId, elapsedFormatted);
             
         }
 
         private async Task SetAction(string value)
         {
             SelectedAction = value;
-            await _actionHubConnection.SendAsync("Broadcast", TeamId, ActionChannelName, _actionHubConnection.ConnectionId, value);
+            await _actionHubConnection.SendAsync(AgileTeamToolsHub.MethodNames.Broadcast, TeamId, ActionChannelName, _actionHubConnection.ConnectionId, value);
         }
 
         public async Task ShowResponses()
         {
-            await _actionHubConnection.SendAsync("Show", TeamId, ActionChannelName);
+            await _actionHubConnection.SendAsync(AgileTeamToolsHub.MethodNames.Show, TeamId, ActionChannelName);
         }
 
         public async Task HideResponses()
         {
-            await _actionHubConnection.SendAsync("Hide", TeamId, ActionChannelName);
+            await _actionHubConnection.SendAsync(AgileTeamToolsHub.MethodNames.Hide, TeamId, ActionChannelName);
         }
 
         private void HandleShow()
