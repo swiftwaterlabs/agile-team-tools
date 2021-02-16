@@ -10,7 +10,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileTeamTools.Ui", "AgileTeamTools.Ui\AgileTeamTools.Ui.csproj", "{130A5835-19C3-4676-AECF-65238B410EBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileTeamTools.Ui", "AgileTeamTools.Ui\AgileTeamTools.Ui.csproj", "{130A5835-19C3-4676-AECF-65238B410EBF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Actions", "Actions", "{1666FA5F-30AA-4E19-B476-551A44E809D0}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\ci-build.yml = .github\workflows\ci-build.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
