@@ -2,6 +2,7 @@
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
+using System.Threading.Tasks;
 
 namespace AgileTeamTools.Api.Functions
 {
@@ -13,6 +14,18 @@ namespace AgileTeamTools.Api.Functions
             [SignalRConnectionInfo(HubName = "messages")] SignalRConnectionInfo connectionInfo)
         {
             return connectionInfo;
+        }
+
+        [FunctionName("broadcast")]
+        public static async Task Broadcast([TimerTrigger("*/1 * * * * *")] TimerInfo myTimer,
+        [SignalR(HubName = "messages")] IAsyncCollector<SignalRMessage> signalRMessages)
+        {
+            await signalRMessages.AddAsync(
+                new SignalRMessage
+                {
+                    Target = "Ping",
+                    Arguments = new[] { System.DateTime.Now.Ticks.ToString() }
+                });
         }
     }
 }
