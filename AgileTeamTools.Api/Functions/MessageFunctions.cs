@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
-using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace AgileTeamTools.Api.Functions
@@ -32,8 +31,8 @@ namespace AgileTeamTools.Api.Functions
             await signalRMessages.AddAsync(
                 new SignalRMessage
                 {
-                    Target = $"NewMessage",
-                    Arguments = new[] { teamId, channelId, message.UserName,message.Body}
+                    Target = $"broadcast|{teamId}|{channelId}",
+                    Arguments = new[] { message?.UserName,message?.Body}
                 });
 
             return new OkResult();
