@@ -7,7 +7,7 @@ namespace AgileTeamTools.Blazor.Ui.Configuration
     {
         public static void Configure(IServiceCollection services, IConfiguration configuration)
         {
-            var apiUrl = "http://localhost:7071/api/";// configuration["Api:Url"];
+            var apiUrl = configuration["Api_Url"];
 
             services.AddHttpClient("Api",client =>client.BaseAddress = new Uri(apiUrl));
             services.AddTransient<BroadcastService>();
