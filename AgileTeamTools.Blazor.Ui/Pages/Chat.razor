@@ -1,6 +1,11 @@
 ﻿@page "/chat"
+@using AgileTeamTools.Blazor.Ui.Models
+@using AgileTeamTools.Blazor.Ui.Services
 @using Microsoft.AspNetCore.SignalR.Client
 @inject NavigationManager NavigationManager
+@inject HubConnection HubConnection
+@inject BroadcastService BroadcastService
+
 @implements IAsyncDisposable
 
 <PageTitle>Index</PageTitle>
@@ -29,50 +34,35 @@
 </ul>
 
 @code {
-    private HubConnection? hubConnection;
     private List<string> messages = new List<string>();
     private string? userInput;
     private string? messageInput;
 
     protected override async Task OnInitializedAsync()
     {
-        hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri("http://localhost:7071/api"))
-            .Build();
-
-        hubConnection.On<string, string>("SendMessage", (user, message) =>
+        HubConnection.On<string, string>("broadcast|t|c", (user, message) =>
         {
             var encodedMsg = $"{user}: {message}";
             messages.Add(encodedMsg);
             StateHasChanged();
         });
 
-        hubConnection.On<string>("Ping", (message) =>
-        {
-            var encodedMsg = $"{message}";
-            messages.Add(encodedMsg);
-            StateHasChanged();
-        });
-
-        await hubConnection.StartAsync();
+        await HubConnection.StartAsync();
     }
 
-    private async Task Send()
+    private Task Send()
     {
-        if (hubConnection is not null)
-        {
-            await hubConnection.SendAsync("SendMessage", userInput, messageInput);
-        }
+        return BroadcastService.BroadcastAsync("t", "c", new Message{UserName=userInput,Body=messageInput});
     }
 
     public bool IsConnected =>
-        hubConnection?.State == HubConnectionState.Connected;
+        HubConnection?.State == HubConnectionState.Connected;
 
     public async ValueTask DisposeAsync()
     {
-        if (hubConnection is not null)
+        if (HubConnection is not null)
         {
-            await hubConnection.DisposeAsync();
+            await HubConnection.DisposeAsync();
         }
     }
 }
