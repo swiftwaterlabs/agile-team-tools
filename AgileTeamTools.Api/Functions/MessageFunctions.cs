@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace AgileTeamTools.Api.Functions
 {
-    public static class MessageFunctions
+    public class MessageFunctions
     {
         [FunctionName("negotiate")]
-        public static SignalRConnectionInfo Negotiate(
+        public SignalRConnectionInfo Negotiate(
             [HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req,
             [SignalRConnectionInfo(HubName = "messages")] SignalRConnectionInfo connectionInfo)
         {
@@ -20,7 +20,7 @@ namespace AgileTeamTools.Api.Functions
         }
 
         [FunctionName("broadcast")]
-        public static async Task<IActionResult> Run(
+        public async Task<IActionResult> Broadcast(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post",Route ="broadcast/{teamId}/{channelId}")] HttpRequest req,
             string teamId,
             string channelId,

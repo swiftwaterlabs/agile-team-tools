@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileTeamTools.Api", "Agile
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileTeamTools.Blazor.Ui", "AgileTeamTools.Blazor.Ui\AgileTeamTools.Blazor.Ui.csproj", "{9ED6E9F8-0F57-419D-A21C-D9E31D26857E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileTeamTools.Api.Test", "AgileTeamTools.Api.Test\AgileTeamTools.Api.Test.csproj", "{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,9 +71,24 @@ Global
 		{9ED6E9F8-0F57-419D-A21C-D9E31D26857E}.Release|x64.Build.0 = Release|Any CPU
 		{9ED6E9F8-0F57-419D-A21C-D9E31D26857E}.Release|x86.ActiveCfg = Release|Any CPU
 		{9ED6E9F8-0F57-419D-A21C-D9E31D26857E}.Release|x86.Build.0 = Release|Any CPU
+		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}.Debug|x64.Build.0 = Debug|Any CPU
+		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}.Debug|x86.Build.0 = Debug|Any CPU
+		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}.Release|x64.ActiveCfg = Release|Any CPU
+		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}.Release|x64.Build.0 = Release|Any CPU
+		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}.Release|x86.ActiveCfg = Release|Any CPU
+		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9} = {A0116222-AD4C-4FAE-BB8A-D43984EC5BBC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {95817914-8435-48D7-840B-5E2EB80EC7EC}
