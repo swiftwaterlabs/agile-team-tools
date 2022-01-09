@@ -14,9 +14,6 @@
                 <MudItem xs="12" md="8">
                     <MudTextField @bind-Value="@UserName" Label="Name" Variant="Variant.Outlined" />
                 </MudItem>
-                <MudItem xs="12" md="4">
-                    <MudCheckBox @bind-Checked="@IsTimerVisible" Label="Show Timer"></MudCheckBox>
-                </MudItem>
                 <MudItem xs="12" md="12">
                     <MudIconButton Variant="MudBlazor.Variant.Filled"
                         Color="Color.Primary"
@@ -83,48 +80,4 @@
             </MudGrid>
         </MudCardContent>
     </MudCard>
-    @if (IsTimerVisible)
-    {
-        <br/>
-        <br/>
-        <MudCard>
-            <MudCardHeader>
-            <CardHeaderContent>
-                <MudText Typo="Typo.subtitle1">Timer</MudText>
-            </CardHeaderContent>
-            </MudCardHeader>
-            <MudCardContent>
-                <MudGrid>
-                    <MudItem xs="12" md="12">
-                        <MudText Typo="Typo.h1">@TimerValue</MudText>
-                    </MudItem>
-                    <MudItem xs="12" md="12">
-                        <MudDivider/>
-                        <MudButton Variant="MudBlazor.Variant.Outlined"
-                            StartIcon="@Icons.Material.Filled.Start"
-                            Class="mr-2 mt-3 mb-3"
-                            OnClick="StartTimer"
-                            Disabled="@(!IsConnected)">
-                            Start
-                        </MudButton>
-                        <MudButton Variant="MudBlazor.Variant.Outlined"
-                            StartIcon="@Icons.Material.Filled.Stop"
-                            Class="mr-2 mt-3 mb-3"
-                            OnClick="StopTimer"
-                            Disabled="@(!IsConnected)">
-                            Stop
-                        </MudButton>
-                         <MudButton Variant="MudBlazor.Variant.Filled"
-                            StartIcon="@Icons.Material.Filled.Refresh"
-                            Class="mr-2 mt-3 mb-3"
-                            OnClick="ResetTimer"
-                            Disabled="@(!IsConnected)">
-                            Reset
-                        </MudButton>
-                        <MudDivider/>
-                    </MudItem>
-                </MudGrid>
-            </MudCardContent>
-        </MudCard>
-    }
 </MudContainer>

@@ -30,9 +30,7 @@ namespace AgileTeamTools.Blazor.Ui.Pages
 
         public bool IsSubmitted = false;
         public bool AreMessagesVisible = false;
-        public bool IsTimerVisible = false;
         public ConcurrentDictionary<string, Message> Results = new();
-        public string TimerValue = "00:00:00";
 
         protected override async Task OnInitializedAsync()
         {
@@ -80,26 +78,6 @@ namespace AgileTeamTools.Blazor.Ui.Pages
                         HandleResetMessage();
                         break;
                     }
-                case Actions.StartTimer:
-                    {
-                        HandleStartTimerMessage();
-                        break;
-                    }
-                case Actions.StopTimer:
-                    {
-                        HandleStopTimerMessage();
-                        break;
-                    }
-                case Actions.ResetTimer:
-                    {
-                        HandleResetTimerMessage();
-                        break;
-                    }
-                case Actions.TimerTick:
-                    {
-                        HandleTimerTickMessage(message);
-                        break;
-                    }
             }
         }
 
@@ -127,26 +105,6 @@ namespace AgileTeamTools.Blazor.Ui.Pages
             Results.Clear();
         }
 
-        private void HandleStartTimerMessage()
-        {
-            
-        }
-
-        private void HandleStopTimerMessage()
-        {
-
-        }
-
-        private void HandleResetTimerMessage()
-        {
-
-        }
-
-        private void HandleTimerTickMessage(Message message)
-        {
-            throw new NotImplementedException();
-        }
-
         private Task SubmitYes()
         {
             return SendMessage(Actions.Submit,"Yes");
@@ -170,21 +128,6 @@ namespace AgileTeamTools.Blazor.Ui.Pages
         private Task Reset()
         {
             return SendMessage(Actions.Reset);
-        }
-
-        private Task StartTimer()
-        {
-            return SendMessage(Actions.StartTimer);
-        }
-
-        private Task StopTimer()
-        {
-            return SendMessage(Actions.StopTimer);
-        }
-
-        private Task ResetTimer()
-        {
-            return SendMessage(Actions.ResetTimer);
         }
 
         private Task SendMessage(string action, string body="")
