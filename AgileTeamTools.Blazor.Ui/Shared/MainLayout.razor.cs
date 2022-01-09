@@ -9,9 +9,6 @@ namespace AgileTeamTools.Blazor.Ui.Shared
     public partial class MainLayout:IDisposable
     {
         [Inject]
-        NavigationManager Navigation { get; set; }
-
-        [Inject]
         AppState AppState { get; set; }
 
         public NavMenu NavMenu { get; set; }

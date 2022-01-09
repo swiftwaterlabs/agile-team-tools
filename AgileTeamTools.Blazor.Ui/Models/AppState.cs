@@ -13,6 +13,8 @@ namespace AgileTeamTools.Blazor.Ui.Models
             get { return _breadCrumbs; }
         }
 
+        public string TeamId { get; set; }
+
         public void SetBreadcrumbs(params BreadcrumbItem[] items)
         {
             _breadCrumbs = items?.ToList() ?? new List<BreadcrumbItem>();
