@@ -4,6 +4,7 @@ using AgileTeamTools.Blazor.Ui.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 using MudBlazor;
+using System.Collections.Concurrent;
 
 namespace AgileTeamTools.Blazor.Ui.Pages
 {
@@ -28,17 +29,17 @@ namespace AgileTeamTools.Blazor.Ui.Pages
         public EstimateOptionRepository EstimateOptionRepository { get; set; }
 
         [Parameter]
-        public string TeamId { get; set; }
+        public string TeamId { get; set; } = "";
 
         private const string ChannelName = "Estimate";
 
-        public string UserName;
-        public string EstimatedValue;
+        public string UserName = "";
+        public string EstimatedValue = "";
         public List<string> EstimateOptions = new();
 
         public bool IsSubmitted = false;
         public bool AreMessagesVisible = false;
-        public Dictionary<string, Message> Estimates = new();
+        public ConcurrentDictionary<string, Message> Estimates = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -67,35 +68,50 @@ namespace AgileTeamTools.Blazor.Ui.Pages
         {
             switch(message?.Action)
             {
-                case "Submit":
+                case Actions.Submit:
                     {
-                        if(Estimates.ContainsKey(user))
-                        {
-                            Estimates[user] = message;
-                        }
-                        else
-                        {
-                            Estimates.Add(user, message);
-                        }
-                        
+                        HandleSubmitMessage(user, message);
                         break;
                     }
-                case "Hide":
+                case Actions.Hide:
                     {
-                        AreMessagesVisible = false;
+                        HandleHideMessage();
                         break;
                     }
-                case "Show":
+                case Actions.Show:
                     {
-                        AreMessagesVisible = true;
+                        HandleShowMessage();
                         break;
                     }
-                case "Reset":
+                case Actions.Reset:
                     {
-                        Estimates.Clear();
+                        HandleResetMessage();
                         break;
                     }
             }
+        }
+        private void HandleSubmitMessage(string user, Message message)
+        {
+            Estimates.AddOrUpdate(user, message, (key, existing) => 
+            {
+                existing.Body = message.Body;
+                return message;
+            });
+        }
+
+        private void HandleShowMessage()
+        {
+            AreMessagesVisible = true;
+        }
+
+        private void HandleHideMessage()
+        {
+            AreMessagesVisible = false;
+        }
+
+        private void HandleResetMessage()
+        {
+            Estimates.Clear();
         }
 
         private void SetEstimate(string estimate)
@@ -111,22 +127,32 @@ namespace AgileTeamTools.Blazor.Ui.Pages
 
         private Task SubmitEstimate()
         {
-            return BroadcastService.BroadcastAsync(TeamId, ChannelName, new Message { UserName = UserName, Body = EstimatedValue, Action="Submit" });
+            return SendMessage(Actions.Submit,EstimatedValue);
         }
 
         private Task Show()
         {
-            return BroadcastService.BroadcastAsync(TeamId, ChannelName, new Message { UserName = UserName, Body = "", Action = "Show" });
+            return SendMessage(Actions.Show);
         }
-
+            
         private Task Hide()
         {
-            return BroadcastService.BroadcastAsync(TeamId, ChannelName, new Message { UserName = UserName, Body = "", Action = "Hide" });
+            return SendMessage(Actions.Hide);
         }
 
         private Task Reset()
         {
-            return BroadcastService.BroadcastAsync(TeamId, ChannelName, new Message { UserName = UserName, Body = "", Action = "Reset" });
+            return SendMessage(Actions.Reset);
+        }
+
+        private Task SendMessage(string action, string body="")
+        {
+            return BroadcastService.BroadcastAsync(TeamId, ChannelName, CreateMessage(action,body));
+        }
+
+        private Message CreateMessage(string action, string body)
+        {
+            return new Message { UserName = UserName, Body = body, Action = action };
         }
 
         public bool IsConnected => HubConnection?.State == HubConnectionState.Connected;
