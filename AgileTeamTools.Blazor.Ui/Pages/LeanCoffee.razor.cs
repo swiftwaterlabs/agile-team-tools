@@ -31,7 +31,7 @@ namespace AgileTeamTools.Blazor.Ui.Pages
 
         public bool IsSubmitted = false;
         public bool AreMessagesVisible = false;
-        public ConcurrentDictionary<string, Message> Estimates = new();
+        public ConcurrentDictionary<string, Message> Results = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -83,7 +83,7 @@ namespace AgileTeamTools.Blazor.Ui.Pages
         }
         private void HandleSubmitMessage(string user, Message message)
         {
-            Estimates.AddOrUpdate(user, message, (key, existing) => 
+            Results.AddOrUpdate(user, message, (key, existing) => 
             {
                 existing.Body = message.Body;
                 return message;
@@ -102,7 +102,7 @@ namespace AgileTeamTools.Blazor.Ui.Pages
 
         private void HandleResetMessage()
         {
-            Estimates.Clear();
+            Results.Clear();
         }
 
         private Task SubmitYes()
