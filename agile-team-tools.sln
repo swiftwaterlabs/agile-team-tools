@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileTeamTools.Ui", "AgileTeamTools.Ui\AgileTeamTools.Ui.csproj", "{130A5835-19C3-4676-AECF-65238B410EBF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Actions", "Actions", "{1666FA5F-30AA-4E19-B476-551A44E809D0}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\ci-build.yml = .github\workflows\ci-build.yml
@@ -21,9 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests (Unit)", "Tests (Unit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileTeamTools.Api", "AgileTeamTools.Api\AgileTeamTools.Api.csproj", "{7F38A06A-723C-4F4A-B11F-5CF9E65F6F68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileTeamTools.Blazor.Ui", "AgileTeamTools.Blazor.Ui\AgileTeamTools.Blazor.Ui.csproj", "{9ED6E9F8-0F57-419D-A21C-D9E31D26857E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileTeamTools.Blazor.Ui", "AgileTeamTools.Blazor.Ui\AgileTeamTools.Blazor.Ui.csproj", "{9ED6E9F8-0F57-419D-A21C-D9E31D26857E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileTeamTools.Api.Test", "AgileTeamTools.Api.Test\AgileTeamTools.Api.Test.csproj", "{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileTeamTools.Api.Test", "AgileTeamTools.Api.Test\AgileTeamTools.Api.Test.csproj", "{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,18 +33,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{130A5835-19C3-4676-AECF-65238B410EBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{130A5835-19C3-4676-AECF-65238B410EBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{130A5835-19C3-4676-AECF-65238B410EBF}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{130A5835-19C3-4676-AECF-65238B410EBF}.Debug|x64.Build.0 = Debug|Any CPU
-		{130A5835-19C3-4676-AECF-65238B410EBF}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{130A5835-19C3-4676-AECF-65238B410EBF}.Debug|x86.Build.0 = Debug|Any CPU
-		{130A5835-19C3-4676-AECF-65238B410EBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{130A5835-19C3-4676-AECF-65238B410EBF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{130A5835-19C3-4676-AECF-65238B410EBF}.Release|x64.ActiveCfg = Release|Any CPU
-		{130A5835-19C3-4676-AECF-65238B410EBF}.Release|x64.Build.0 = Release|Any CPU
-		{130A5835-19C3-4676-AECF-65238B410EBF}.Release|x86.ActiveCfg = Release|Any CPU
-		{130A5835-19C3-4676-AECF-65238B410EBF}.Release|x86.Build.0 = Release|Any CPU
 		{7F38A06A-723C-4F4A-B11F-5CF9E65F6F68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7F38A06A-723C-4F4A-B11F-5CF9E65F6F68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F38A06A-723C-4F4A-B11F-5CF9E65F6F68}.Debug|x64.ActiveCfg = Debug|Any CPU
