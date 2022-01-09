@@ -1,6 +1,5 @@
 ﻿@page "/{TeamId}/estimate"
 
-
 @implements IAsyncDisposable
 
 <MudContainer Class="mt-16">
@@ -19,9 +18,52 @@
                     @foreach(var option in EstimateOptions)
                     {
                          <MudButton Variant="GetButtonType(option)" 
-                         Color="Color.Primary" 
-                         Class="mr-2"
-                         OnClick="args=>SetEstimate(option)">@option</MudButton>
+                             Color="Color.Secondary" 
+                             Class="mr-2"
+                             OnClick="args=>SetEstimate(option)">@option</MudButton>
+                    }
+
+                    <MudButton Variant="MudBlazor.Variant.Filled"
+                        Color="Color.Primary"
+                        StartIcon="@Icons.Material.Outlined.Send"
+                        Class="ml-4"
+                        OnClick="SubmitEstimate"
+                        Disabled="@(!IsConnected)">
+                        Submit
+                    </MudButton>
+                </MudItem>
+                <MudItem xs="12" md="12">
+                    <MudDivider/>
+                    <MudButton Variant="MudBlazor.Variant.Outlined"
+                        StartIcon="@Icons.Material.Filled.AccountCircle"
+                        Class="mr-2 mt-3 mb-3"
+                        OnClick="Show"
+                        Disabled="@(!IsConnected)">
+                        Show
+                    </MudButton>
+                    <MudButton Variant="MudBlazor.Variant.Outlined"
+                        StartIcon="@Icons.Material.Filled.HighlightOff"
+                        Class="mr-2 mt-3 mb-3"
+                        OnClick="Hide"
+                        Disabled="@(!IsConnected)">
+                        Hide
+                    </MudButton>
+                     <MudButton Variant="MudBlazor.Variant.Filled"
+                        StartIcon="@Icons.Material.Filled.Refresh"
+                        Class="mr-2 mt-3 mb-3"
+                        OnClick="Reset"
+                        Disabled="@(!IsConnected)">
+                        Reset
+                    </MudButton>
+                    <MudDivider/>
+                </MudItem>
+                <MudItem>
+                    @foreach(var item in Estimates)
+                    {
+                        <MudPaper Class="pa-16 ma-2" Outlined="true" >
+                            <MudText Typo="Typo.h3">@item.Value.Body</MudText>
+                            <MudText Typo="Typo.subtitle1">@item.Value.UserName</MudText>
+                        </MudPaper>
                     }
                 </MudItem>
             </MudGrid>
@@ -31,7 +73,7 @@
 </MudContainer>
 
 
-<div class="form-group">
+@*<div class="form-group">
     <label>
         User:
         <input @bind="userInput" />
@@ -52,4 +94,4 @@
     {
         <li>@message</li>
     }
-</ul>
+</ul>*@

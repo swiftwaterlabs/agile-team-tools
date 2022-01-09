@@ -32,13 +32,13 @@ namespace AgileTeamTools.Blazor.Ui.Pages
 
         private const string ChannelName = "Estimate";
 
-        public string UserName { get; set; }
-        public string EstimatedValue { get; set; }
-
+        public string UserName;
+        public string EstimatedValue;
         public List<string> EstimateOptions = new();
-        public bool IsSubmitted { get; set; } = false;
+
+        public bool IsSubmitted = false;
         public bool AreMessagesVisible = false;
-        public Dictionary<string, Message> Estimates = new Dictionary<string, Message>();
+        public Dictionary<string, Message> Estimates = new();
 
         private List<string> messages = new();
         private string? userInput;
@@ -69,10 +69,32 @@ namespace AgileTeamTools.Blazor.Ui.Pages
             EstimatedValue = estimate;
         }
 
-        private MudBlazor.Variant GetButtonType(string value)
+        private Variant GetButtonType(string value)
         {
-            if (EstimatedValue == value) return MudBlazor.Variant.Filled;
-            return MudBlazor.Variant.Outlined;
+            if (EstimatedValue == value) return Variant.Filled;
+            return Variant.Outlined;
+        }
+
+        private Task SubmitEstimate()
+        {
+            return Task.CompletedTask;
+        }
+
+        private Task Show()
+        {
+            return Task.CompletedTask;
+        }
+
+        private Task Hide()
+        {
+            return Task.CompletedTask;
+        }
+
+        private Task Reset()
+        {
+            Estimates.Clear();
+
+            return Task.CompletedTask;
         }
 
         private Task Send()
