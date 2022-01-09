@@ -1,8 +1,64 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
-
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
+<MudContainer Class="mt-16">
+    <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Agile Team Tools</MudText>
+    <MudText Align="Align.Center">Tools to enable agile ceremonies in a virtual environment</MudText>
+    <MudGrid Class="mt-8">
+        <MudItem xs="12" sm="6" md="6">
+            <MudCard Elevation="25" Class="rounded-lg pb-4">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h4" Align="Align.Center">Estimate</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <div class="d-flex justify-center">
+                        <MudText Typo="Typo.h5">Estimate work interatively</MudText>
+                    </div>
+                    <MudList Class="mx-auto mt-4" Style="width:300px;">
+                        <MudListItem Icon="@Icons.Material.Filled.Groups">
+                            Full Team Participation
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.VerifiedUser">
+                            Live Results
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.SupervisedUserCircle">
+                            Flexible Definitions
+                        </MudListItem>
+                    </MudList>
+                </MudCardContent>
+                <MudCardActions Class="d-flex justify-center">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width:50%;" OnClick="ShowEstimatePage">Start Now</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="6">
+            <MudCard Elevation="25" Class="rounded-lg pb-4">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h4" Align="Align.Center">Lean Coffee</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <div class="d-flex justify-center">
+                        <MudText Typo="Typo.h5">Track topics and time for a Lean Coffee session</MudText>
+                    </div>
+                    <MudList Class="mx-auto mt-4" Style="width:300px;">
+                        <MudListItem Icon="@Icons.Material.Filled.Groups">
+                            Full Team Participation
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.VerifiedUser">
+                            Live Feedback
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Timer">
+                            Shared Timer
+                        </MudListItem>
+                    </MudList>
+                </MudCardContent>
+                <MudCardActions Class="d-flex justify-center">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width:50%;" OnClick="ShowLeanCoffeePage">Start Now</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</MudContainer>

@@ -1,4 +1,5 @@
-﻿using AgileTeamTools.Blazor.Ui.Services;
+﻿using AgileTeamTools.Blazor.Ui.Models;
+using AgileTeamTools.Blazor.Ui.Services;
 using BlazorApplicationInsights;
 using Microsoft.AspNetCore.SignalR.Client;
 using MudBlazor.Services;
@@ -10,6 +11,8 @@ namespace AgileTeamTools.Blazor.Ui.Configuration
         public static void Configure(IServiceCollection services, IConfiguration configuration)
         {
             var apiUrl = configuration["Api_Url"];
+
+            services.AddSingleton<AppState>();
 
             ConfigureApplicationInsights(services, configuration);
             ConfigureApi(services, apiUrl);
