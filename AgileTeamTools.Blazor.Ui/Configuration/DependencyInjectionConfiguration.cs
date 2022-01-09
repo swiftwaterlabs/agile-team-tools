@@ -53,6 +53,7 @@ namespace AgileTeamTools.Blazor.Ui.Configuration
             {
                 var hubConnection = new HubConnectionBuilder()
                     .WithUrl(apiUrl)
+                    .WithAutomaticReconnect()
                     .Build();
 
                 return hubConnection;
