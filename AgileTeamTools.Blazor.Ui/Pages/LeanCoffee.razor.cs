@@ -1,5 +1,4 @@
 ﻿using AgileTeamTools.Blazor.Ui.Models;
-using AgileTeamTools.Blazor.Ui.Repostories;
 using AgileTeamTools.Blazor.Ui.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -31,7 +30,9 @@ namespace AgileTeamTools.Blazor.Ui.Pages
 
         public bool IsSubmitted = false;
         public bool AreMessagesVisible = false;
+        public bool IsTimerVisible = false;
         public ConcurrentDictionary<string, Message> Results = new();
+        public string TimerValue = "00:00:00";
 
         protected override async Task OnInitializedAsync()
         {
@@ -79,8 +80,29 @@ namespace AgileTeamTools.Blazor.Ui.Pages
                         HandleResetMessage();
                         break;
                     }
+                case Actions.StartTimer:
+                    {
+                        HandleStartTimerMessage();
+                        break;
+                    }
+                case Actions.StopTimer:
+                    {
+                        HandleStopTimerMessage();
+                        break;
+                    }
+                case Actions.ResetTimer:
+                    {
+                        HandleResetTimerMessage();
+                        break;
+                    }
+                case Actions.TimerTick:
+                    {
+                        HandleTimerTickMessage(message);
+                        break;
+                    }
             }
         }
+
         private void HandleSubmitMessage(string user, Message message)
         {
             Results.AddOrUpdate(user, message, (key, existing) => 
@@ -103,6 +125,26 @@ namespace AgileTeamTools.Blazor.Ui.Pages
         private void HandleResetMessage()
         {
             Results.Clear();
+        }
+
+        private void HandleStartTimerMessage()
+        {
+            
+        }
+
+        private void HandleStopTimerMessage()
+        {
+
+        }
+
+        private void HandleResetTimerMessage()
+        {
+
+        }
+
+        private void HandleTimerTickMessage(Message message)
+        {
+            throw new NotImplementedException();
         }
 
         private Task SubmitYes()
@@ -128,6 +170,21 @@ namespace AgileTeamTools.Blazor.Ui.Pages
         private Task Reset()
         {
             return SendMessage(Actions.Reset);
+        }
+
+        private Task StartTimer()
+        {
+            return SendMessage(Actions.StartTimer);
+        }
+
+        private Task StopTimer()
+        {
+            return SendMessage(Actions.StopTimer);
+        }
+
+        private Task ResetTimer()
+        {
+            return SendMessage(Actions.ResetTimer);
         }
 
         private Task SendMessage(string action, string body="")
