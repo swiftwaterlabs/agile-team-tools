@@ -34,7 +34,8 @@ namespace AgileTeamTools.Api.Test.Functions
             var message = new Message
             {
                 UserName = "the-user",
-                Body = "what I want to say"
+                Body = "what I want to say",
+                Action = "what im doing"
             };
 
             var result = await function.Broadcast(this.PostRequest(message), teamId, channelId, signalRMessages);
@@ -46,6 +47,7 @@ namespace AgileTeamTools.Api.Test.Functions
             AssertMessageSentToTeamChannel(teamId, channelId, sentMessage);
             AssertMessageSentWithUserName(message, sentMessage);
             AssertMessageSentWithBody(message, sentMessage);
+            AssertMessageSentWithAction(message, sentMessage);
         }
 
         private static void AssertOkResult(IActionResult result)
@@ -70,7 +72,15 @@ namespace AgileTeamTools.Api.Test.Functions
 
         private static void AssertMessageSentWithBody(Message message, SignalRMessage sentMessage)
         {
-            Assert.Equal(message.Body, sentMessage.Arguments[1]);
+            var actual = (Message)sentMessage.Arguments[1];
+            Assert.Equal(message.Body,actual.Body);
         }
+
+        private static void AssertMessageSentWithAction(Message message, SignalRMessage sentMessage)
+        {
+            var actual = (Message)sentMessage.Arguments[1];
+            Assert.Equal(message.Action, actual.Action);
+        }
+
     }
 }
