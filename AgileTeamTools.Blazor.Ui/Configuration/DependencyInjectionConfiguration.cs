@@ -1,4 +1,5 @@
 ﻿using AgileTeamTools.Blazor.Ui.Models;
+using AgileTeamTools.Blazor.Ui.Repostories;
 using AgileTeamTools.Blazor.Ui.Services;
 using BlazorApplicationInsights;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -13,6 +14,11 @@ namespace AgileTeamTools.Blazor.Ui.Configuration
             var apiUrl = configuration["Api_Url"];
 
             services.AddSingleton<AppState>();
+
+            services.AddTransient<EstimateOptionRepository>();
+
+            services.AddTransient<NameGeneratorService>();
+            
 
             ConfigureApplicationInsights(services, configuration);
             ConfigureApi(services, apiUrl);

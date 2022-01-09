@@ -3,7 +3,33 @@
 
 @implements IAsyncDisposable
 
-<PageTitle>Index</PageTitle>
+<MudContainer Class="mt-16">
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.subtitle1">Team Estimates</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="12" md="12">
+                    <MudTextField @bind-Value="@UserName" Label="Name" Variant="Variant.Outlined" />
+                </MudItem>
+                <MudItem xs="12" md="12">
+                    @foreach(var option in EstimateOptions)
+                    {
+                         <MudButton Variant="GetButtonType(option)" 
+                         Color="Color.Primary" 
+                         Class="mr-2"
+                         OnClick="args=>SetEstimate(option)">@option</MudButton>
+                    }
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+    
+</MudContainer>
+
 
 <div class="form-group">
     <label>

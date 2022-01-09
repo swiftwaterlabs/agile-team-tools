@@ -47,6 +47,7 @@ namespace AgileTeamTools.Ui.Pages
 
         protected override Task OnParametersSetAsync()
         {
+
             return Start();
         }
 
