@@ -40,20 +40,9 @@ namespace AgileTeamTools.Blazor.Ui.Pages
         public bool AreMessagesVisible = false;
         public Dictionary<string, Message> Estimates = new();
 
-        private List<string> messages = new();
-        private string? userInput;
-        private string? messageInput;
-
         protected override async Task OnInitializedAsync()
         {
-            HubConnection.On<string, string>($"broadcast|{TeamId}|{ChannelName}", (user, message) =>
-            {
-                var encodedMsg = $"{user}: {message}";
-                messages.Add(encodedMsg);
-                StateHasChanged();
-            });
-
-            await HubConnection.StartAsync();
+            await ConfigureSignalR();
         }
 
         protected override async Task OnParametersSetAsync()
@@ -62,6 +51,51 @@ namespace AgileTeamTools.Blazor.Ui.Pages
 
             EstimateOptions = EstimateOptionRepository.Get();
             UserName = await NameService.GetRandomName();
+        }
+
+        private async Task ConfigureSignalR()
+        {
+            HubConnection.On($"broadcast|{TeamId}|{ChannelName}", (Action<string, Message>)((user, message) =>
+            {
+                HandleReceivedMessage(user, message);
+            }));
+
+            await HubConnection.StartAsync();
+        }
+
+        private void HandleReceivedMessage(string user, Message message)
+        {
+            switch(message?.Action)
+            {
+                case "Submit":
+                    {
+                        if(Estimates.ContainsKey(user))
+                        {
+                            Estimates[user] = message;
+                        }
+                        else
+                        {
+                            Estimates.Add(user, message);
+                        }
+                        
+                        break;
+                    }
+                case "Hide":
+                    {
+                        AreMessagesVisible = false;
+                        break;
+                    }
+                case "Show":
+                    {
+                        AreMessagesVisible = true;
+                        break;
+                    }
+                case "Reset":
+                    {
+                        Estimates.Clear();
+                        break;
+                    }
+            }
         }
 
         private void SetEstimate(string estimate)
@@ -77,29 +111,22 @@ namespace AgileTeamTools.Blazor.Ui.Pages
 
         private Task SubmitEstimate()
         {
-            return Task.CompletedTask;
+            return BroadcastService.BroadcastAsync(TeamId, ChannelName, new Message { UserName = UserName, Body = EstimatedValue, Action="Submit" });
         }
 
         private Task Show()
         {
-            return Task.CompletedTask;
+            return BroadcastService.BroadcastAsync(TeamId, ChannelName, new Message { UserName = UserName, Body = "", Action = "Show" });
         }
 
         private Task Hide()
         {
-            return Task.CompletedTask;
+            return BroadcastService.BroadcastAsync(TeamId, ChannelName, new Message { UserName = UserName, Body = "", Action = "Hide" });
         }
 
         private Task Reset()
         {
-            Estimates.Clear();
-
-            return Task.CompletedTask;
-        }
-
-        private Task Send()
-        {
-            return BroadcastService.BroadcastAsync(TeamId, ChannelName, new Message { UserName = userInput, Body = messageInput });
+            return BroadcastService.BroadcastAsync(TeamId, ChannelName, new Message { UserName = UserName, Body = "", Action = "Reset" });
         }
 
         public bool IsConnected => HubConnection?.State == HubConnectionState.Connected;

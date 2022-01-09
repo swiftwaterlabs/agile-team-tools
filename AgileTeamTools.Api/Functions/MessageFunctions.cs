@@ -32,7 +32,7 @@ namespace AgileTeamTools.Api.Functions
                 new SignalRMessage
                 {
                     Target = $"broadcast|{teamId}|{channelId}",
-                    Arguments = new[] { message?.UserName,message?.Body}
+                    Arguments = new object[] { message?.UserName,message}
                 });
 
             return new OkResult();

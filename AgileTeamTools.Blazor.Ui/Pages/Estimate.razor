@@ -58,12 +58,17 @@
                     <MudDivider/>
                 </MudItem>
                 <MudItem>
-                    @foreach(var item in Estimates)
+                    @if (AreMessagesVisible)
                     {
-                        <MudPaper Class="pa-16 ma-2" Outlined="true" >
-                            <MudText Typo="Typo.h3">@item.Value.Body</MudText>
-                            <MudText Typo="Typo.subtitle1">@item.Value.UserName</MudText>
-                        </MudPaper>
+                        @foreach (var item in Estimates)
+                        {
+                            <MudPaper Class="pa-16 ma-2" 
+                                Outlined="true"
+                                Style="text-align: center">
+                                <MudText Typo="Typo.h3">@item.Value.Body</MudText>
+                                <MudText Typo="Typo.subtitle1">@item.Value.UserName</MudText>
+                            </MudPaper>
+                        }
                     }
                 </MudItem>
             </MudGrid>
