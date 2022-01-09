@@ -8,7 +8,7 @@ using System.Collections.Concurrent;
 
 namespace AgileTeamTools.Blazor.Ui.Pages
 {
-    public partial class Estimate:IAsyncDisposable
+    public partial class LeanCoffee:IAsyncDisposable
     {
         [Inject]
         public AppState AppState { get; set; }
@@ -22,17 +22,12 @@ namespace AgileTeamTools.Blazor.Ui.Pages
         [Inject]
         public NameGeneratorService NameService { get; set; }
 
-        [Inject]
-        public EstimateOptionRepository EstimateOptionRepository { get; set; }
-
         [Parameter]
         public string TeamId { get; set; } = "";
 
-        private const string ChannelName = "Estimate";
+        private const string ChannelName = "LeanCoffee";
 
         public string UserName = "";
-        public string EstimatedValue = "";
-        public List<string> EstimateOptions = new();
 
         public bool IsSubmitted = false;
         public bool AreMessagesVisible = false;
@@ -45,9 +40,8 @@ namespace AgileTeamTools.Blazor.Ui.Pages
 
         protected override async Task OnParametersSetAsync()
         {
-            AppState.SetBreadcrumbs(new BreadcrumbItem("Estimate", Paths.Estimate(TeamId)));
+            AppState.SetBreadcrumbs(new BreadcrumbItem("Lean Coffee", Paths.Estimate(TeamId)));
 
-            EstimateOptions = EstimateOptionRepository.Get();
             UserName = await NameService.GetRandomName();
         }
 
@@ -111,20 +105,14 @@ namespace AgileTeamTools.Blazor.Ui.Pages
             Estimates.Clear();
         }
 
-        private void SetEstimate(string estimate)
+        private Task SubmitYes()
         {
-            EstimatedValue = estimate;
+            return SendMessage(Actions.Submit,"Yes");
         }
 
-        private Variant GetButtonType(string value)
+        private Task SubmitNo()
         {
-            if (EstimatedValue == value) return Variant.Filled;
-            return Variant.Outlined;
-        }
-
-        private Task SubmitEstimate()
-        {
-            return SendMessage(Actions.Submit,EstimatedValue);
+            return SendMessage(Actions.Submit, "No");
         }
 
         private Task Show()
@@ -150,6 +138,16 @@ namespace AgileTeamTools.Blazor.Ui.Pages
         private Message CreateMessage(string action, string body)
         {
             return new Message { UserName = UserName, Body = body, Action = action };
+        }
+
+        private string GetResultIcon(string value)
+        {
+            switch (value)
+            {
+                case "Yes": return Icons.Material.Outlined.ThumbUp;
+                case "No": return Icons.Material.Outlined.ThumbDown;
+                default: return Icons.Material.Outlined.QuestionMark;
+            }
         }
 
         public bool IsConnected => HubConnection?.State == HubConnectionState.Connected;

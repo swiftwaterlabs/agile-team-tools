@@ -1,0 +1,84 @@
+﻿@page "/{TeamId}/leancoffee"
+
+@implements IAsyncDisposable
+
+<MudContainer Class="mt-16">
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.subtitle1">Lean Coffee</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="12" md="12">
+                    <MudTextField @bind-Value="@UserName" Label="Name" Variant="Variant.Outlined" />
+                </MudItem>
+                <MudItem xs="12" md="12">
+                    <MudIconButton Variant="MudBlazor.Variant.Filled"
+                        Color="Color.Primary"
+                        Icon="@Icons.Material.Outlined.ThumbUp"
+                        Class="ml-4"
+                        OnClick="SubmitYes"
+                        Disabled="@(!IsConnected)"
+                        aria-label="yes"/>
+                    <MudIconButton  Variant="MudBlazor.Variant.Filled"
+                        Color="Color.Primary"
+                        Icon="@Icons.Material.Outlined.ThumbDown"
+                        Class="ml-4"
+                        OnClick="SubmitNo"
+                        Disabled="@(!IsConnected)"
+                        aria-label="no"/>
+                </MudItem>
+                <MudItem xs="12" md="12">
+                    <MudDivider/>
+                    <MudButton Variant="MudBlazor.Variant.Outlined"
+                        StartIcon="@Icons.Material.Filled.AccountCircle"
+                        Class="mr-2 mt-3 mb-3"
+                        OnClick="Show"
+                        Disabled="@(!IsConnected)">
+                        Show
+                    </MudButton>
+                    <MudButton Variant="MudBlazor.Variant.Outlined"
+                        StartIcon="@Icons.Material.Filled.HighlightOff"
+                        Class="mr-2 mt-3 mb-3"
+                        OnClick="Hide"
+                        Disabled="@(!IsConnected)">
+                        Hide
+                    </MudButton>
+                     <MudButton Variant="MudBlazor.Variant.Filled"
+                        StartIcon="@Icons.Material.Filled.Refresh"
+                        Class="mr-2 mt-3 mb-3"
+                        OnClick="Reset"
+                        Disabled="@(!IsConnected)">
+                        Reset
+                    </MudButton>
+                    <MudDivider/>
+                </MudItem>
+                <MudItem xs="12" md="12">
+                    @if (AreMessagesVisible)
+                    {
+                        <MudGrid>
+                            @foreach (var item in Estimates)
+                            {
+                                <MudItem xs="6" md="3">
+                                    <MudPaper Class="pa-16 ma-2" 
+                                        Outlined="true"
+                                        Style="text-align: center">
+                                        <MudIcon Icon="@(GetResultIcon(item.Value.Body))" 
+                                            Style="font-size: 4rem;"
+                                            />
+                                        <MudText Typo="Typo.subtitle2">@item.Value.UserName</MudText>
+                                    </MudPaper>
+                                </MudItem>
+                                
+                            }
+                        </MudGrid>
+                        
+                    }
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+    
+</MudContainer>
