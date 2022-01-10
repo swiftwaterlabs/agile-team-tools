@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BA6D1E30-8F12-4558-B592-D2B2DC6ED2C7}"
 	ProjectSection(SolutionItems) = preProject
-		.gitignore = .gitignore
-		LICENSE = LICENSE
-		README.md = README.md
+		..\.gitignore = ..\.gitignore
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Actions", "Actions", "{1666FA5F-30AA-4E19-B476-551A44E809D0}"
@@ -22,6 +22,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileTeamTools.Blazor.Ui", "AgileTeamTools.Blazor.Ui\AgileTeamTools.Blazor.Ui.csproj", "{9ED6E9F8-0F57-419D-A21C-D9E31D26857E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileTeamTools.Api.Test", "AgileTeamTools.Api.Test\AgileTeamTools.Api.Test.csproj", "{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileTeamTools.Blazor.Ui.Test", "AgileTeamTools.Blazor.Ui.Test\AgileTeamTools.Blazor.Ui.Test.csproj", "{BC6D6099-E090-42A1-BB24-AE558ADF1B30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,12 +71,25 @@ Global
 		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}.Release|x64.Build.0 = Release|Any CPU
 		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}.Release|x86.ActiveCfg = Release|Any CPU
 		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9}.Release|x86.Build.0 = Release|Any CPU
+		{BC6D6099-E090-42A1-BB24-AE558ADF1B30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC6D6099-E090-42A1-BB24-AE558ADF1B30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC6D6099-E090-42A1-BB24-AE558ADF1B30}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BC6D6099-E090-42A1-BB24-AE558ADF1B30}.Debug|x64.Build.0 = Debug|Any CPU
+		{BC6D6099-E090-42A1-BB24-AE558ADF1B30}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BC6D6099-E090-42A1-BB24-AE558ADF1B30}.Debug|x86.Build.0 = Debug|Any CPU
+		{BC6D6099-E090-42A1-BB24-AE558ADF1B30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC6D6099-E090-42A1-BB24-AE558ADF1B30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC6D6099-E090-42A1-BB24-AE558ADF1B30}.Release|x64.ActiveCfg = Release|Any CPU
+		{BC6D6099-E090-42A1-BB24-AE558ADF1B30}.Release|x64.Build.0 = Release|Any CPU
+		{BC6D6099-E090-42A1-BB24-AE558ADF1B30}.Release|x86.ActiveCfg = Release|Any CPU
+		{BC6D6099-E090-42A1-BB24-AE558ADF1B30}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{72CCE32B-7A9A-41BB-99E8-7AD872FAD8D9} = {A0116222-AD4C-4FAE-BB8A-D43984EC5BBC}
+		{BC6D6099-E090-42A1-BB24-AE558ADF1B30} = {A0116222-AD4C-4FAE-BB8A-D43984EC5BBC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {95817914-8435-48D7-840B-5E2EB80EC7EC}

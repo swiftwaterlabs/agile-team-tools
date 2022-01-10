@@ -15,19 +15,20 @@ This project welcomes contributions and suggestions. Pull Requests will only be 
 ## Applications
 |Project|Type|Purpose|
 |---|---|---|
-|AgileTeamTools.Ui|Blazor Server|User Interface for the application|
+|AgileTeamTools.Api|Azure Function|API Layer for the application|
+|AgileTeamTools.Ui|Blazor WebAssembly|User Interface for the application|
 
 ## Tests
 |Project|Type|Purpose|
 |---|---|---|
-|AgileTeamTools.Ui.Tests|xUnit Tests|Unit Tests for the Blazor UI project|
+|AgileTeamTools.Api.Tests|xUnit Tests|Unit Tests for the Api project|
+|AgileTeamTools.Blazor.Ui.Tests|xUnit Tests|Unit Tests for the Blazor UI project|
 
 # Pipelines
 GitHub Actions are used to perform buil and release tasks
 |Defintion|Purpose|
 |---|---|
 |[ci-build.yml](/.github/workflows/ci-build.yml)|Continous Integration Build|
-|[blazor-deploy.yml](/.github/workflows/blazor-deploy.yml)|Deploys the Blazor App to Azure|
 
 # Development Environment Setup
 To run Agile Team Tools in your development environment, use the following steps.
