@@ -5,8 +5,11 @@ A collection of tools that are commonly used by teams following standard agile m
 ## Estimation
 While working with virtual teams, one of the ceremonies that can be difficult to properly perform is work estimation.  To facilitate this, the Agile Team Tools enables real-time estimation sessions by allowing people to select their estimate and then immediately share with others on the team so everyone can see the estimates and have a conversation on what the team consensus is.
 
+![Estimate Example](./media/example-estimate.jpg "Example")
 ## Lean Coffee
 Another difficulty working with virtual teams and performing [lean coffee](https://agilecoffee.com/leancoffee/) is the ability for participants to effectively give feedback if they want to continue on a topic (thumbs up) or not (thumbs down).  Agile Team Tools enables anonympous(optional), real-time sharing of a person's opionion on whether or not to continue in a real-time manner so others on the team can see their response and decide whether to move on or not.
+
+![Lean Coffee Example](./media/example-leancoffee.jpg "Example")
 
 # Solution Architecture
 This solution is broken up into two main components, an API and a static website.  The API enables serverless SignalR operations so users can be updated in realtime, and the static website is the user interface component that enables people to interact with each other in a team environment.  As this is a native Azure application, all components use Azure PaaS services such as Azure Functions, SignalR Service, Storage Blobs, and Managed Identities.
