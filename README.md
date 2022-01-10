@@ -8,13 +8,13 @@ While working with virtual teams, one of the ceremonies that can be difficult to
 ## Lean Coffee
 Another difficulty working with virtual teams and performing [lean coffee](https://agilecoffee.com/leancoffee/) is the ability for participants to effectively give feedback if they want to continue on a topic (thumbs up) or not (thumbs down).  Agile Team Tools enables anonympous(optional), real-time sharing of a person's opionion on whether or not to continue in a real-time manner so others on the team can see their response and decide whether to move on or not.
 
-## Solution Architecture
+# Solution Architecture
 This solution is broken up into two main components, an API and a static website.  The API enables serverless SignalR operations so users can be updated in realtime, and the static website is the user interface component that enables people to interact with each other in a team environment.  As this is a native Azure application, all components use Azure PaaS services such as Azure Functions, SignalR Service, Storage Blobs, and Managed Identities.
 
-### Component Diagram
+## Component Diagram
 For more detail, a [Threat model](https://docs.microsoft.com/en-us/azure/security/develop/threat-modeling-tool) for the solution can be found at [docs/threat-model.tm7](docs/threat-model.tm7) that shows all the components and their interactions.  For a more detailed view of the individual components, underlying code, and their interactions see [src/README.md](src/README.md)
 
-### Infrastructure
+## Infrastructure
 The infrastructure that is needed to run this service can be found at https://github.com/swiftwaterlabs/agile-team-tools-infra where it is defined using [Terraform](https://www.terraform.io/)
 
 # Contributing
