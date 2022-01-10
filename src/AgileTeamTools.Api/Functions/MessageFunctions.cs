@@ -13,7 +13,7 @@ namespace AgileTeamTools.Api.Functions
     {
         [FunctionName("negotiate")]
         public SignalRConnectionInfo Negotiate(
-            [HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req,
             [SignalRConnectionInfo(HubName = "messages")] SignalRConnectionInfo connectionInfo)
         {
             return connectionInfo;
