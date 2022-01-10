@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace AgileTeamTools.Blazor.Ui.Shared
 {
-    public partial class NavMenu
+    public partial class NavMenu:IDisposable
     {
         [Inject]
         AppState AppState { get; set; }
@@ -12,21 +12,33 @@ namespace AgileTeamTools.Blazor.Ui.Shared
 
         public string TeamId { get; set; }
 
-        protected override Task OnParametersSetAsync()
+        protected override Task OnInitializedAsync()
         {
-            TeamId = AppState.TeamId;
+            AppState.OnChange += StateHasChanged;
+
             return RefreshMenu();
         }
 
+        protected override Task OnParametersSetAsync()
+        {
+            return RefreshMenu();
+        }
 
         public async Task RefreshMenu()
         {
 
             IsLoading = true;
-            
+
+            TeamId = AppState.TeamId;
+
             IsLoading = false;
 
             StateHasChanged();
+        }
+
+        public void Dispose()
+        {
+            AppState.OnChange -= StateHasChanged;
         }
     }
 }

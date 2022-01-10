@@ -1,4 +1,5 @@
 ﻿using MudBlazor;
+using System.Data;
 
 namespace AgileTeamTools.Blazor.Ui.Models
 {
@@ -13,7 +14,19 @@ namespace AgileTeamTools.Blazor.Ui.Models
             get { return _breadCrumbs; }
         }
 
-        public string TeamId { get; set; }
+        private string _teamId;
+        public string TeamId 
+        { 
+            get
+            {
+                return _teamId;
+            }
+            set
+            {
+                _teamId = value;
+                NotifyStateChanged();
+            }
+        }
 
         public void SetBreadcrumbs(params BreadcrumbItem[] items)
         {
