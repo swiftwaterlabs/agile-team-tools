@@ -45,6 +45,7 @@ namespace AgileTeamTools.Blazor.Ui.Pages
 
         protected override async Task OnParametersSetAsync()
         {
+            AppState.TeamId = TeamId;
             AppState.SetBreadcrumbs(new BreadcrumbItem("Estimate", Paths.Estimate(TeamId)));
 
             EstimateOptions = EstimateOptionRepository.Get();

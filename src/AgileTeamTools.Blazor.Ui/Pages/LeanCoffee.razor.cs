@@ -39,6 +39,7 @@ namespace AgileTeamTools.Blazor.Ui.Pages
 
         protected override async Task OnParametersSetAsync()
         {
+            AppState.TeamId = TeamId;
             AppState.SetBreadcrumbs(new BreadcrumbItem("Lean Coffee", Paths.Estimate(TeamId)));
 
             UserName = await NameService.GetRandomName();
